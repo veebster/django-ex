@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "django-example",
+    "name": "django-warehouse",
     "annotations": {
       "openshift.io/display-name": "Django",
       "description": "An example Django application with no database. For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/django-ex/blob/master/README.md.",
@@ -16,8 +16,8 @@
     }
   },
   "labels": {
-      "template": "django-example",
-      "app": "django-example"
+      "template": "django-warehouse",
+      "app": "django-warehouse"
   },
   "message": "The following service(s) have been created in your project: ${NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/sclorg/django-ex/blob/master/README.md.",
   "objects": [
@@ -44,8 +44,8 @@
         "ports": [
           {
             "name": "web",
-            "port": 8080,
-            "targetPort": 8080
+            "port": 8000,
+            "targetPort": 8000
           }
         ],
         "selector": {
@@ -133,7 +133,7 @@
           }
         ],
         "postCommit": {
-          "script": "./manage.py test"
+          "script": "./startup.sh"
         }
       }
     },
@@ -157,7 +157,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "django-example"
+                "django-warhouse"
               ],
               "from": {
                 "kind": "ImageStreamTag",
@@ -183,11 +183,11 @@
           "spec": {
             "containers": [
               {
-                "name": "django-example",
+                "name": "django-warehouse",
                 "image": " ",
                 "ports": [
                   {
-                    "containerPort": 8080
+                    "containerPort": 8000
                   }
                 ],
                 "readinessProbe": {
@@ -195,7 +195,7 @@
                   "initialDelaySeconds": 3,
                   "httpGet": {
                     "path": "/",
-                    "port": 8080
+                    "port": 8000
                   }
                 },
                 "livenessProbe": {
@@ -203,7 +203,7 @@
                   "initialDelaySeconds": 30,
                   "httpGet": {
                     "path": "/",
-                    "port": 8080
+                    "port": 8000
                   }
                 },
                 "env": [
@@ -239,7 +239,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "django-example"
+      "value": "django-warehouse"
     },
     {
       "name": "NAMESPACE",
@@ -267,7 +267,7 @@
       "displayName": "Git Repository URL",
       "required": true,
       "description": "The URL of the repository with your application source code.",
-      "value": "https://github.com/sclorg/django-ex.git"
+      "value": "https://github.com/veebster/django-ex.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
